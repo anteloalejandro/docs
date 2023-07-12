@@ -1,13 +1,16 @@
 ---
+import Debug from 'astro/components/Debug.astro'
 const unfilteredDocs = await Astro.glob('../../pages/docs/*.md')
 const docs = unfilteredDocs.filter(d => !d.frontmatter.draft)
-
+const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
+  ? Astro.url.pathname.substring(0, Astro.url.pathname.length - 1)
+  : Astro.url.pathname
 ---
 
 <nav class="refs">
   <h3>Reference</h3>
   {docs.map(d => {
-    const isCurrentDoc = Astro.url.pathname == d.url
+    const isCurrentDoc = url == d.url
     return <p>
       <a class={isCurrentDoc ? 'current-doc' : '' } href={d.url}>
         {d.frontmatter.title || d.url}

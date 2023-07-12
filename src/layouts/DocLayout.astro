@@ -18,7 +18,10 @@ const title = frontmatter.title
 
 const unfilteredDocs = await Astro.glob('../pages/docs/*.md')
 const filteredDocs = unfilteredDocs.filter(d => !d.frontmatter.draft)
-const currentDocIdx = filteredDocs.findIndex(d => d.url == Astro.url.pathname)
+const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
+  ? Astro.url.pathname.substring(0, Astro.url.pathname.length - 1)
+  : Astro.url.pathname
+const currentDocIdx = filteredDocs.findIndex(d => d.url == url)
 const prevDoc = currentDocIdx > 0 && filteredDocs[currentDocIdx - 1]
 const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocIdx + 1]
 ---
