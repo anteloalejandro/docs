@@ -1,0 +1,33 @@
+---
+import { HeadingWithSubHeading } from './toc.astro';
+
+type Props = {
+  heading: HeadingWithSubHeading
+}
+
+const { heading } = Astro.props
+---
+
+<li>
+  <a href={'#' + heading.slug}>
+    {heading.text}
+  </a>
+  {
+    heading.subheadings.length > 0 && (
+      <ol>
+        {heading.subheadings.map(subheading =>
+          <Astro.self heading={subheading}/>
+        )}
+      </ol>
+    )
+  }
+</li>
+
+<style>
+  li {
+    padding-block: .5rem;
+  }
+  ol li {
+    padding-bottom: 0rem;
+  }
+</style>

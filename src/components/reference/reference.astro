@@ -1,0 +1,12 @@
+---
+import { Debug } from 'astro/components'
+const unFilteredDocs = await Astro.glob('../../pages/docs/*.md')
+const docs = unFilteredDocs.filter(d => !d.frontmatter.draft)
+---
+
+<nav class="refs">
+  <h3>Reference</h3>
+  {docs.map(d => {
+    return <p><a href={d.url}>{d.frontmatter.title || d.url}</a></p>
+  })}
+</nav>

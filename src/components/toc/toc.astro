@@ -1,0 +1,40 @@
+---
+import { MarkdownHeading } from '@astrojs/markdown-remark/dist/types';
+import TocEntry from './tocEntry.astro';
+export type HeadingWithSubHeading = MarkdownHeading & {
+  subheadings: MarkdownHeading[]
+}
+
+type Props = {
+  headings: MarkdownHeading[],
+  maxDepth?: number
+}
+const { headings, maxDepth = 2 } = Astro.props
+const toc = nest()
+
+function nest() {
+  const toc: HeadingWithSubHeading[] = []
+  const parents: Map<number, HeadingWithSubHeading> = new Map()
+
+  headings.forEach(h => {
+    const heading = { ...h, subheadings: []}
+    parents.set(heading.depth, heading)
+
+    if (heading.depth == 1) {
+      toc.push(heading)
+    } else if (maxDepth >= heading.depth) {
+      parents.get(heading.depth - 1)
+        .subheadings.push(heading)
+    }
+  })
+
+  return toc
+}
+---
+
+<nav class="toc">
+  <h3>Table of contents</h3>
+  <ol>
+    {toc.map(h => <TocEntry heading={h}/>)}
+  </ol>
+</nav>

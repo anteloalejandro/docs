@@ -1,15 +1,14 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <h1>Check out the docs <a href="/docs/">here</a>!</h1>
+</BaseLayout>
+
+<style is:global lang="scss">
+  .container {
+    display: grid;
+    place-content: center;
+  }
+</style>

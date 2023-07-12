@@ -1,0 +1,24 @@
+* {box-sizing: border-box;}
+:root {
+  font-family: system-ui, sans-serif;
+}
+
+:root, body {
+  margin: 0;
+}
+
+body, .container {
+  height: 100vh;
+}
+
+code, pre {
+  font-family: 'Ubuntu Mono', 'Fira Mono', monospace;
+}
+
+pre.astro-code {
+  padding: 1rem;
+  border-radius: .5rem;
+  code {
+    font-family: inherit;
+  }
+}

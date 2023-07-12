@@ -1,0 +1,61 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Reference from "../components/reference/reference.astro";
+import Toc from '../components/toc/toc.astro'
+import { MarkdownHeading } from "@astrojs/markdown-remark/dist/types";
+
+type Props = {
+  title?: 'en' | 'es',
+  lang?: string,
+  frontmatter: any,
+  headings: MarkdownHeading[]
+}
+const { frontmatter, headings } = Astro.props
+
+const title = frontmatter.title
+---
+
+<BaseLayout title={title}>
+  <Reference/>
+  <main>
+    <slot/>
+  </main>
+  <Toc headings={headings}/>
+</BaseLayout>
+
+<style is:global lang="scss">
+.container {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 200px 1fr 200px;
+  }
+}
+
+nav.refs, main, nav.toc {
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+nav.refs {
+  text-align: center;
+}
+
+nav.toc {
+  h3 {
+    text-align: center;
+  }
+}
+
+main {
+  table {
+    border-collapse: collapse;
+
+    td {
+      border: 2px solid black;
+      padding: .25rem;
+    }
+  }
+}
+</style>
