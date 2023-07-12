@@ -1,0 +1,28 @@
+---
+import Toggle from "./Toggle.astro";
+---
+<header>
+  <Toggle client:visible>
+  </Toggle>
+  <h1>
+    Documentation
+  </h1>
+</header>
+
+<style lang="scss">
+  header {
+    display: grid;
+    grid-template-columns: 4rem 1fr 4rem;
+    grid-auto-flow: column;
+    justify-items: center;
+    align-content: stretch;
+    z-index: 100;
+  }
+  h1 {
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+    font-size: 2rem;
+    grid-column: 2/3;
+  }
+</style>

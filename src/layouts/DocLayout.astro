@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Reference from "../components/reference/reference.astro";
+import Header from "../components/Header.astro";
 import Toc from '../components/toc/toc.astro'
 import { MarkdownHeading } from "@astrojs/markdown-remark/dist/types";
 
@@ -16,6 +17,7 @@ const title = frontmatter.title
 ---
 
 <BaseLayout title={title}>
+  <Header client:visible/>
   <Reference/>
   <main>
     <slot/>
@@ -24,13 +26,72 @@ const title = frontmatter.title
 </BaseLayout>
 
 <style is:global lang="scss">
+:root {
+  --ref-width: 200px;
+  --header-height: 4rem;
+  scroll-padding-top: var(--header-height);
+  @media (max-width: 768px) {
+    body, .container {
+      height: unset;
+      min-height: 100vh;
+    }
+  }
+}
 .container {
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  grid-template-columns: var(--ref-width) 1fr 300px;
+  grid-template-rows: var(--header-height) 1fr;
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr 300px;
+    nav.refs {
+      z-index: 50;
+      width: var(--ref-width);
+      position: fixed;
+      padding-top: var(--header-height);
+      top: 0;
+      bottom: 0;
+      left: -100%;
+      transition: left 500ms ease;
+    }
 
-  @media screen and (max-width: 900px) {
-    grid-template-columns: 200px 1fr 200px;
+    &.show-panel {
+      nav.refs {
+        left: 0;
+      }
+    }
   }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-height) auto 1fr;
+
+    nav.toc {
+      grid-row: 2/3;
+    }
+
+    main {
+      grid-row: 3/4;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      inset-inline: 0;
+    }
+
+  }
+}
+
+header {
+  grid-row: 1/2;
+  grid-column: 1/-1;
+  background-color: black;
+  color: white;
+}
+
+main {
+  scroll-behavior: smooth;
+  height: 100%;
 }
 
 nav.refs, main, nav.toc {
@@ -40,6 +101,7 @@ nav.refs, main, nav.toc {
 
 nav.refs {
   text-align: center;
+  background-color: #DFDFDF;
 }
 
 nav.toc {
@@ -58,4 +120,5 @@ main {
     }
   }
 }
+
 </style>

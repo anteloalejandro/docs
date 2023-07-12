@@ -1,11 +1,13 @@
 * {box-sizing: border-box;}
 :root {
   font-family: system-ui, sans-serif;
+  scroll-behavior: smooth;
 }
 
-:root, body {
+body {
   margin: 0;
 }
+
 
 body, .container {
   height: 100vh;
