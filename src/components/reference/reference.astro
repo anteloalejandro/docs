@@ -1,12 +1,28 @@
 ---
-import { Debug } from 'astro/components'
-const unFilteredDocs = await Astro.glob('../../pages/docs/*.md')
-const docs = unFilteredDocs.filter(d => !d.frontmatter.draft)
+const unfilteredDocs = await Astro.glob('../../pages/docs/*.md')
+const docs = unfilteredDocs.filter(d => !d.frontmatter.draft)
+
 ---
 
 <nav class="refs">
   <h3>Reference</h3>
   {docs.map(d => {
-    return <p><a href={d.url}>{d.frontmatter.title || d.url}</a></p>
+    const isCurrentDoc = Astro.url.pathname == d.url
+    return <p>
+      <a class={isCurrentDoc ? 'current-doc' : '' } href={d.url}>
+        {d.frontmatter.title || d.url}
+      </a>
+    </p>
   })}
 </nav>
+
+<style>
+  nav.refs {
+    text-align: center;
+    background-color: #DFDFDF;
+  }
+
+  a.current-doc {
+    background-color: yellow;
+  }
+</style>

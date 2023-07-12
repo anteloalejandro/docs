@@ -2,7 +2,8 @@
 import BaseLayout from "./BaseLayout.astro";
 import Reference from "../components/reference/reference.astro";
 import Header from "../components/Header.astro";
-import Toc from '../components/toc/toc.astro'
+import Toc from '../components/toc/toc.astro';
+import NavigationBtn from "../components/NavigationBtn.astro";
 import { MarkdownHeading } from "@astrojs/markdown-remark/dist/types";
 
 type Props = {
@@ -14,6 +15,12 @@ type Props = {
 const { frontmatter, headings } = Astro.props
 
 const title = frontmatter.title
+
+const unfilteredDocs = await Astro.glob('../pages/docs/*.md')
+const filteredDocs = unfilteredDocs.filter(d => !d.frontmatter.draft)
+const currentDocIdx = filteredDocs.findIndex(d => d.url == Astro.url.pathname)
+const prevDoc = currentDocIdx > 0 && filteredDocs[currentDocIdx - 1]
+const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocIdx + 1]
 ---
 
 <BaseLayout title={title}>
@@ -21,6 +28,10 @@ const title = frontmatter.title
   <Reference/>
   <main>
     <slot/>
+    <div class="navigation">
+      {prevDoc && <NavigationBtn direction="previous" doc={prevDoc}/>}
+      {nextDoc && <NavigationBtn direction="next" doc={nextDoc}/>}
+    </div>
   </main>
   <Toc headings={headings}/>
 </BaseLayout>
@@ -85,32 +96,11 @@ const title = frontmatter.title
 header {
   grid-row: 1/2;
   grid-column: 1/-1;
-  background-color: black;
-  color: white;
 }
 
 main {
   scroll-behavior: smooth;
   height: 100%;
-}
-
-nav.refs, main, nav.toc {
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-nav.refs {
-  text-align: center;
-  background-color: #DFDFDF;
-}
-
-nav.toc {
-  h3 {
-    text-align: center;
-  }
-}
-
-main {
   table {
     border-collapse: collapse;
 
@@ -121,4 +111,18 @@ main {
   }
 }
 
+nav.refs, main, nav.toc {
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.navigation {
+  display: grid;
+  grid-template-rows: auto;
+  grid-auto-flow: column;
+  justify-content: space-around;
+  align-content: stretch;
+  gap: 2rem;
+  margin-block: 2rem;
+}
 </style>

@@ -1,10 +1,3 @@
----
-type Props = {
-  hideAt?: number
-}
-
-const { hideAt = 1024 } = Astro.props
----
 <toggle-btn>
   <input type="checkbox" id="trigger">
   <label for="trigger">
@@ -12,7 +5,7 @@ const { hideAt = 1024 } = Astro.props
   </label>
 </toggle-btn>
 
-<script define:vars={{ hideAt }}>
+<script>
 
 class ToggleBtn extends HTMLElement {
   isActive = null
@@ -44,19 +37,6 @@ class ToggleBtn extends HTMLElement {
       }
 
     })
-
-    if (window.innerWidth >= hideAt) {
-      this.classList.add('hidden')
-    } else {
-      this.classList.remove('hidden')
-    }
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= hideAt) {
-        this.classList.add('hidden')
-      } else {
-        this.classList.remove('hidden')
-      }
-    })
   }
 }
 
@@ -73,6 +53,10 @@ customElements.define('toggle-btn', ToggleBtn)
     & > * {
       cursor: pointer;
     }
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   }
 
   #trigger {
@@ -87,7 +71,7 @@ customElements.define('toggle-btn', ToggleBtn)
         padding: 1rem;
         fill: white;
         transform: rotate3d(0, 1, 0, 0deg);
-        transition: transform 200ms ease,
+        transition: transform 200ms ease 200ms,
                     fill 200ms ease;
       }
     }
