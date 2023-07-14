@@ -66,6 +66,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
       bottom: 0;
       left: -100%;
       transition: left 500ms ease;
+      box-shadow: -20px 0px 30px black;
     }
 
     &.show-panel {
@@ -128,4 +129,16 @@ nav.refs, main, nav.toc {
   gap: 2rem;
   margin-block: 2rem;
 }
+
+nav.toc .active {
+  & > a {
+    background-color: yellow;
+  }
+  ol, & + ol {
+    background-color: lightyellow;
+  }
+}
+
 </style>
+
+<script src="../scripts/toc.ts"></script>
