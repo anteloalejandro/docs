@@ -26,7 +26,11 @@ pre.astro-code {
 }
 
 
-.icon {
+svg {
+  fill: currentColor;
+}
+
+.custom-icon {
   --svg: url('/favicon.svg')
   font-style: normal;
   display: inline-block;
