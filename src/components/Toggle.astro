@@ -1,7 +1,7 @@
 <toggle-btn>
   <input type="checkbox" id="trigger">
   <label for="trigger">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+    <i class="icon"></i>
   </label>
 </toggle-btn>
 
@@ -74,11 +74,26 @@ customElements.define('toggle-btn', ToggleBtn)
         transition: transform 200ms ease 200ms,
                     fill 200ms ease;
       }
+
+      .icon {
+        --svg: url('/img/angles-right-solid.svg');
+        font-size: 2rem;
+        height: 100%;
+        color: white;
+        transform: rotate3d(0, 1, 0, 0deg);
+        transition: transform 200ms ease 200ms,
+                    color 200ms ease;
+      }
     }
 
     &:checked + label {
       svg {
         fill: grey;
+        transform: rotate3d(0, 1, 0, 180deg);
+      }
+
+      .icon {
+        color: grey;
         transform: rotate3d(0, 1, 0, 180deg);
       }
     }
