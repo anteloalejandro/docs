@@ -11,21 +11,30 @@ const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
   <h3>Reference</h3>
   {docs.map(d => {
     const isCurrentDoc = url == d.url
-    return <p>
+    return <span>
       <a class={isCurrentDoc ? 'current-doc' : '' } href={d.url}>
         {d.frontmatter.title || d.url}
       </a>
-    </p>
+    </span>
   })}
 </nav>
 
-<style>
+<style lang="scss">
   nav.refs {
     text-align: center;
     background-color: white;
   }
 
-  a.current-doc {
-    background-color: yellow;
+  span {
+    display: block;
+    margin-block: .2rem;
+    a {
+      display: block;
+      height: 100%;
+      padding: .5rem;
+      &.current-doc {
+        background-color: yellow;
+      }
+    }
   }
 </style>

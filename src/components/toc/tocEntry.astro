@@ -1,5 +1,6 @@
 ---
 import { HeadingWithSubHeading } from './toc.astro';
+import { Icon } from 'astro-icon';
 
 type Props = {
   heading: HeadingWithSubHeading
@@ -10,7 +11,8 @@ const { heading } = Astro.props
 
 <li>
   <a href={'#' + heading.slug}>
-    {heading.text}
+    <span class="block"></span>
+    <span class="text">{heading.text}</span>
   </a>
   {
     heading.subheadings.length > 0 && (
@@ -23,11 +25,40 @@ const { heading } = Astro.props
   }
 </li>
 
-<style>
+<style lang="scss">
+  a {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+  }
+  ol {
+    padding-left: 0;
+    list-style-type: none;
+  }
   li {
-    padding-block: .5rem;
+    list-style-type: none;
+    padding-top: 0;
+    a .text {
+      padding-block: 0.5rem;
+    }
+
+    li a {
+      gap: 2rem;
+      .text {
+        padding-block: 0.2rem;
+        :not(:first-of-type) {
+          margin-top: 0.2rem;
+        }
+      }
+    }
   }
-  ol li {
-    padding-bottom: 0rem;
+
+  .block {
+    display: block;
+    width: 0.2em;
+    background-color: black;
+    flex-shrink: 0;
   }
+
 </style>

@@ -44,29 +44,54 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
   --ref-width: 200px;
   --header-height: 4rem;
   scroll-padding-top: var(--header-height);
-  @media (max-width: 768px) {
     body, .container {
       height: unset;
       min-height: 100vh;
     }
-  }
 }
 .container {
   display: grid;
   grid-template-columns: var(--ref-width) 1fr 300px;
   grid-template-rows: var(--header-height) 1fr;
+
+  .sticky {
+    position: sticky;
+    top: var(--header-height);
+    left: 0;
+    align-self: start;
+  }
+
+  header {
+    grid-row: 1/2;
+    grid-column: 1/-1;
+    align-self: stretch;
+    position: sticky;
+    top: 0;
+  }
+  nav.refs {
+    grid-column: 1 / span 1;
+    @extend .sticky
+  }
+  nav.toc {
+    grid-column: -2/-1;
+    @extend .sticky
+  }
+  main {
+    grid-column: 2 / 3;
+  }
+
   @media screen and (max-width: 1024px) {
-    grid-template-columns: 1fr 300px;
     nav.refs {
       z-index: 50;
-      width: var(--ref-width);
       position: fixed;
-      padding-top: var(--header-height);
-      top: 0;
       bottom: 0;
       left: -100%;
       transition: left 500ms ease;
       box-shadow: -20px 0px 30px black;
+    }
+
+    main {
+      grid-column-start: 1;
     }
 
     &.show-panel {
@@ -81,6 +106,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
     grid-template-rows: var(--header-height) auto 1fr;
 
     nav.toc {
+      position: static;
       grid-row: 2/3;
     }
 
@@ -95,11 +121,6 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
     }
 
   }
-}
-
-header {
-  grid-row: 1/2;
-  grid-column: 1/-1;
 }
 
 main {
@@ -136,6 +157,9 @@ nav.toc .active {
     background-color: lightyellow;
     & > a {
       background-color: yellow;
+      .block {
+        background-color: orange;
+      }
     }
     ol, & + ol {
       background-color: lightyellow;

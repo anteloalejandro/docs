@@ -66,7 +66,7 @@ async function updateTocOnScroll(container: HTMLElement) {
   activateAnchor(heading.id)
 }
 
-updateTocOnScroll(main)
-main.addEventListener('scroll', async ev => {
-  updateTocOnScroll(main)
+updateTocOnScroll(document.documentElement)
+window.addEventListener('scroll', async ev => {
+  updateTocOnScroll(document.documentElement)
 })
