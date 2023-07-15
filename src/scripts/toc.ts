@@ -8,8 +8,10 @@ export async function currentHeading(container: HTMLElement = document.body, hDe
     headerStr += ', h'+i
   }
   let headings = [...document.querySelectorAll<HTMLElement>(`main :is(${headerStr})`)]
-  const buffer = window.innerHeight - 200
-  const bar = container.scrollTop + (window.innerHeight - buffer)
+  // const scrollPercent = (container.scrollTop + window.innerHeight) / container.scrollHeight
+  // const bar = container.scrollTop + (window.innerHeight * scrollPercent)
+  //
+  const bar = container.scrollTop + 100
 
   let isFinalHeading = false
   const firstValidHeading = headings.find((h, idx) => {
@@ -20,7 +22,7 @@ export async function currentHeading(container: HTMLElement = document.body, hDe
     return found
   })
 
-  let targetHeading
+  let targetHeading: HTMLElement
   if (isFinalHeading) {
     targetHeading = headings.at(-1)
   } else if (firstValidHeading == headings.at(0)) {
@@ -51,7 +53,6 @@ async function activateAnchor(id: string) {
 
       if (uncleGrandpa.tagName == 'A') {
         uncleGrandpa.classList.add('active')
-        console.log(uncleGrandpa.textContent, uncleGrandpa.tagName)
       }
     }
   })
@@ -65,12 +66,7 @@ async function updateTocOnScroll(container: HTMLElement) {
   activateAnchor(heading.id)
 }
 
-activateAnchor(document.querySelector('h1[id]').id)
-
+updateTocOnScroll(main)
 main.addEventListener('scroll', async ev => {
   updateTocOnScroll(main)
-})
-
-window.addEventListener('scroll', async ev => {
-  updateTocOnScroll(document.documentElement)
 })

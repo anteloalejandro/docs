@@ -131,11 +131,15 @@ nav.refs, main, nav.toc {
 }
 
 nav.toc .active {
-  & > a {
-    background-color: yellow;
-  }
-  ol, & + ol {
+  @media (min-width: 769px) {
+
     background-color: lightyellow;
+    & > a {
+      background-color: yellow;
+    }
+    ol, & + ol {
+      background-color: lightyellow;
+    }
   }
 }
 
