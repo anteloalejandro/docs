@@ -22,7 +22,7 @@ const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
 <style lang="scss">
   nav.refs {
     text-align: center;
-    background-color: white;
+    background-color: var(--bg-3);
   }
 
   span {
@@ -32,8 +32,11 @@ const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
       display: block;
       height: 100%;
       padding: .5rem;
+      text-decoration: none;
+      border-radius: var(--radius);
       &.current-doc {
-        background-color: yellow;
+        background-color: var(--hl-1);
+        color: var(--platinum);
       }
     }
   }

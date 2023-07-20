@@ -39,12 +39,18 @@ function nest() {
   </ol>
 </nav>
 
-<style>
+<style lang="scss">
+  .toc {
+    background-color: var(--bg-3);
+  }
   h3 {
     text-align: center;
   }
   ol {
     position: relative;
-    padding-left: 1rem;
+    padding-left: 0rem;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background-color: var(--bg-2)
   }
 </style>

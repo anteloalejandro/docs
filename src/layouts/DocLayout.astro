@@ -57,6 +57,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
   .sticky {
     position: sticky;
     top: var(--header-height);
+    min-height: calc(100vh - var(--header-height));
     left: 0;
     align-self: start;
   }
@@ -70,11 +71,11 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
   }
   nav.refs {
     grid-column: 1 / span 1;
-    @extend .sticky
+    @extend .sticky;
   }
   nav.toc {
     grid-column: -2/-1;
-    @extend .sticky
+    @extend .sticky;
   }
   main {
     grid-column: 2 / 3;
@@ -129,8 +130,11 @@ main {
   table {
     border-collapse: collapse;
 
-    td {
-      border: 2px solid black;
+    th {
+      background-color: var(--bg-3);
+    }
+    td, th {
+      border: 2px solid var(--fg);
       padding: .25rem;
     }
   }
@@ -154,15 +158,16 @@ nav.refs, main, nav.toc {
 nav.toc .active {
   @media (min-width: 769px) {
 
-    background-color: lightyellow;
+    background-color: var(--hl-3);
     & > a {
-      background-color: yellow;
+      background-color: var(--hl-2);
+      color: var(--bg);
       .block {
-        background-color: orange;
+        background-color: var(--hl-2);
       }
     }
     ol, & + ol {
-      background-color: lightyellow;
+      background-color: var(--hl-3);
     }
   }
 }

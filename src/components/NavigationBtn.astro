@@ -25,12 +25,22 @@ const { direction, doc } = Astro.props
 
 <style lang="scss">
   .navigation-btn {
+    text-decoration: none;
+    padding: 1rem 2rem;
+    background-color: var(--hl-1);
+    color: var(--platinum);
+    border-radius: var(--radius);
     display: flex;
+    align-items: center;
     gap: 1rem;
+    transition: color 200ms ease, background-color 200ms ease;
+
+    &:hover, &:focus {
+      background-color: var(--hl-3);
+    }
 
     span {
-      width: 1ch;
-      color: blue;
+      width: 2ch;
     }
 
     .prev-navigation-btn svg {

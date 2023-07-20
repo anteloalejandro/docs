@@ -2,6 +2,31 @@
 :root {
   font-family: system-ui, sans-serif;
   scroll-behavior: smooth;
+
+  --radius: .5rem;
+
+  --black-1: #282828;
+  --black-2: #222;
+  --white-1: #fff;
+  --white-2: #f6f9f6;
+  --jet: #2d2d2d;
+  --darkblue: #242f40;
+  --gold: #cca43b;
+  --platinum: #e5e5e5;
+  --blue: #00a7e1;
+
+  --bg: var(--jet);
+  --bg-2: var(--black-1);
+  --bg-3: var(--black-2);
+  --fg: var(--platinum);
+  --fg-2: var(--white-1);
+  --fg-3: var(--white-2);
+  --hl-1: var(--gold);
+  --hl-2: var(--blue);
+  --hl-3: var(--darkblue);
+
+  background-color: var(--bg);
+  color: var(--fg);
 }
 
 body {
@@ -11,6 +36,10 @@ body {
 
 body, .container {
   height: 100vh;
+}
+
+pre {
+  background-color: var(--bg-3) !important;
 }
 
 code, pre {
@@ -27,6 +56,10 @@ pre.astro-code {
 
 svg[astro-icon] {
   fill: currentColor;
+}
+
+a {
+  color: var(--hl-2);
 }
 
 .custom-icon {
