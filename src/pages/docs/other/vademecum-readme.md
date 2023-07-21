@@ -1,7 +1,8 @@
 ---
-layout: '../../layouts/DocLayout.astro'
+layout: '../../../layouts/DocLayout.astro'
 title: 'README Vademecum'
 draft: false
+order: 1
 ---
 
 # Overview

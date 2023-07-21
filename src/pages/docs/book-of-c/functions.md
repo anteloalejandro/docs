@@ -1,6 +1,6 @@
 ---
 layout: '../../../layouts/DocLayout.astro'
-title: 'Introduction'
+title: 'Functions'
 draft: false
 ---
 

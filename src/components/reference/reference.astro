@@ -1,15 +1,20 @@
 ---
-import Debug from 'astro/components/Debug.astro'
-const unfilteredDocs = await Astro.glob('../../pages/docs/*.md')
-const docs = unfilteredDocs.filter(d => !d.frontmatter.draft)
+import { MarkdownInstance } from 'astro'
 const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
   ? Astro.url.pathname.substring(0, Astro.url.pathname.length - 1)
   : Astro.url.pathname
+
+type Props = {
+  docList: MarkdownInstance<Record<string, any>>[]
+}
+
+const { docList } = Astro.props
+
 ---
 
 <nav class="refs">
   <h3>Reference</h3>
-  {docs.map(d => {
+  {docList.map(d => {
     const isCurrentDoc = url == d.url
     return <span>
       <a class={isCurrentDoc ? 'current-doc' : '' } href={d.url}>

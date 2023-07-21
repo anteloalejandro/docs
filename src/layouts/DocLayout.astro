@@ -16,11 +16,29 @@ const { frontmatter, headings } = Astro.props
 
 const title = frontmatter.title
 
-const unfilteredDocs = await Astro.glob('../pages/docs/*.md')
-const filteredDocs = unfilteredDocs.filter(d => !d.frontmatter.draft)
 const url = Astro.url.pathname.lastIndexOf('/') == Astro.url.pathname.length - 1
   ? Astro.url.pathname.substring(0, Astro.url.pathname.length - 1)
   : Astro.url.pathname
+
+const prevUrl = url.substring(0, url.lastIndexOf('/'))
+const isRoot = prevUrl == '/docs' // Get from the current url
+const baseRoute = isRoot ? url : prevUrl
+
+const unfilteredDocs = await Astro.glob('../pages/docs/**/*.md')
+const filteredDocs = unfilteredDocs
+  .filter(d => {
+    const isDraft = d.frontmatter.draft
+    const isIndex = d.file.substring(d.file.lastIndexOf('/')) == '/index.md'
+
+    const route = isIndex ? d.url : d.url.substring(0, d.url.lastIndexOf('/'))
+
+    return !isDraft && route == baseRoute
+  })
+  .sort((a, b) => {
+    const orderA = a.frontmatter.order || 0
+    const orderB = b.frontmatter.order || 0
+    return orderA - orderB;
+  })
 const currentDocIdx = filteredDocs.findIndex(d => d.url == url)
 const prevDoc = currentDocIdx > 0 && filteredDocs[currentDocIdx - 1]
 const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocIdx + 1]
@@ -28,7 +46,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
 
 <BaseLayout title={title}>
   <Header/>
-  <Reference/>
+  <Reference docList={filteredDocs}/>
   <main>
     <slot/>
     <div class="navigation">
@@ -41,7 +59,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
 
 <style is:global lang="scss">
 :root {
-  --ref-width: 200px;
+  --ref-width: 300px;
   --header-height: 4rem;
   scroll-padding-top: var(--header-height);
     body, .container {
@@ -89,6 +107,7 @@ const nextDoc = currentDocIdx < filteredDocs.length && filteredDocs[currentDocId
       left: -100%;
       transition: left 500ms ease;
       box-shadow: -20px 0px 30px black;
+      width: var(--ref-width);
     }
 
     main {

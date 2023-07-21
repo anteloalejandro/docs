@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+---
+
+<BaseLayout title="Docs">
+  <div class="grid">
+    <a href="/docs/book-of-c">
+      <h2>The Book of C</h2>
+      <small>The Book of C rendered in a more responsive and mobile-friendly way.</small>
+    </a>
+    <a href="/docs/other">
+      <h2>Other docs</h2>
+    </a>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    gap: 2rem;
+    padding: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    a {
+      color: inherit;
+      display: grid;
+      gap: 1rem;
+      align-content: center;
+      padding: 3rem;
+      background-color: var(--bg-2);
+      text-decoration: none;
+      border-radius: var(--radius);
+
+      h2 {
+        margin: 0;
+        color: var(--hl-1);
+      }
+    }
+  }
+</style>

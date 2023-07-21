@@ -4,7 +4,7 @@ import Toggle from "./Toggle.astro";
 <header>
   <Toggle/>
   <h1>
-    Documentation
+    <a href="/docs">Documentation</a>
   </h1>
 </header>
 
@@ -25,5 +25,9 @@ import Toggle from "./Toggle.astro";
     margin: 0;
     font-size: 2rem;
     grid-column: 2/3;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 </style>

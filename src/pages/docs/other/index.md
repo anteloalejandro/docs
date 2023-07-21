@@ -1,7 +1,8 @@
 ---
-layout: '../../layouts/DocLayout.astro'
+layout: '../../../layouts/DocLayout.astro'
 title: 'Introduction'
 draft: false
+order: 0
 ---
 
 # Overview

@@ -1,6 +1,7 @@
 ---
-layout: '../../layouts/DocLayout.astro'
+layout: '../../../layouts/DocLayout.astro'
 title: API Vademecum
+order: 2
 draft: false
 ---
 
