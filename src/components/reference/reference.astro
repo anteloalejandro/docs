@@ -26,8 +26,11 @@ const { docList } = Astro.props
 
 <style lang="scss">
   nav.refs {
-    text-align: center;
     background-color: var(--bg-3);
+  }
+
+  h3 {
+    text-align: center;
   }
 
   span {
@@ -36,7 +39,7 @@ const { docList } = Astro.props
     a {
       display: block;
       height: 100%;
-      padding: .5rem;
+      padding: .5rem 1rem;
       text-decoration: none;
       border-radius: var(--radius);
       &.current-doc {
