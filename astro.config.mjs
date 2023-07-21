@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config';
-import { toc } from 'rehype-toc'
+import { toc } from 'rehype-toc';
+import netlify from "@astrojs/netlify/functions";
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -7,7 +9,7 @@ export default defineConfig({
     shikiConfig: {
       theme: 'one-dark-pro',
       wrap: false
-    },
+    }
     /* rehypePlugins: [
       [toc, {
         headings: ['h1', 'h2'],
@@ -17,5 +19,7 @@ export default defineConfig({
         }
       }]
     ] */
-  }
+  },
+  output: "server",
+  adapter: netlify()
 });
