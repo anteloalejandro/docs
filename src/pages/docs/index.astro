@@ -1,17 +1,37 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+
+type Link = {
+  href: string;
+  title: string;
+  abstract?: string;
+}
+
+const links: Link[] = [
+  {
+    href: '/docs/book-of-c',
+    title: 'The Book of C',
+    abstract: 'The Book of C rendered in a more responsive and mobile-friendly way.'
+  },
+  {
+    href: '/docs/other',
+    title: 'Other Docs'
+  }
+]
 ---
 
 <BaseLayout title="Docs">
   <div class="grid">
-    <a href="/docs/book-of-c">
-      <h2>The Book of C</h2>
-      <small>The Book of C rendered in a more responsive and mobile-friendly way.</small>
-    </a>
-    <a href="/docs/other">
-      <h2>Other docs</h2>
-    </a>
+    {links.map(l => {
+      return <a href={l.href}>
+        <h2>{l.title}</h2>
+        {
+          l.abstract &&
+          <small>{l.abstract}</small>
+        }
+      </a>
+    })}
   </div>
 </BaseLayout>
 

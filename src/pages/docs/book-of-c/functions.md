@@ -1,9 +1,9 @@
 ---
 layout: '../../../layouts/DocLayout.astro'
-title: 'Functions'
 draft: false
+order: 7
+title: Functions
 ---
-
 # Functions
 
 All programming languages have built-in mechanisms for *structuring* and
