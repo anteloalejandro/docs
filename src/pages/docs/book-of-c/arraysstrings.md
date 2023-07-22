@@ -207,11 +207,27 @@ compiling in C99 mode (`-std=c99` on `clang` and `gcc`). Here is an
 example with using a variable-length array (notice that we're using the
 `atoi` function to convert a string to an integer):
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-code/vararray.c
+int main() {
+    printf("How many scores to input? ");
+    char buffer[10];
+    fgets(buffer, 10, stdin);
+    int num_scores = atoi(buffer);
+    int scores[num_scores];
+    for (int i = 0; i < num_scores; i++) {
+        printf("Enter score %d: ", i+1);
+        fgets(buffer, 10, stdin);
+        scores[i] = atoi(buffer);
+    }
 
-</div>
+    // ... do something with the scores
+
+    return EXIT_SUCCESS;
+}
+```
 
 <div class="index">
 
@@ -529,11 +545,25 @@ Let's look at one more example of a string manipulation program. In this
 program, we ask the user for a string, then convert all characters in
 the string to lowercase.
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
-code/tolower.c
-
-</div>
+int main() {
+    char buffer[64];
+    printf ("Gimme a string: ");
+    fgets(buffer, 64, stdin);
+    for (int i = 0; i < strlen(buffer); i++) {
+        if (isupper(buffer[i])) {
+            buffer[i] = tolower(buffer[i]);
+        }
+    }
+    printf ("Here's your string, lower-cased: %s\n", buffer);
+    return EXIT_SUCCESS;
+}
+```
 
 An example run of the program might look like this:
 

@@ -23,11 +23,20 @@ until end-of-file is reached. Here is the code:
 
 </div>
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-code/echo.c
-
-</div>
+int main() {
+    int character;
+    character = getchar();
+    while (character != EOF) {
+        putchar(character);
+        character = getchar();
+    }
+    return EXIT_SUCCESS;
+}
+```
 
 <div class="sidebar">
 

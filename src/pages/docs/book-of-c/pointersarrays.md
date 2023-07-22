@@ -506,11 +506,71 @@ advance to the next `struct fraction`), but since that function just
 gets a *copy* of the pointer to the `struct fraction` this is totally
 ok.
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h> // for malloc and free
 
-code/fracheap.c
+struct fraction {
+    int numerator;
+    int denominator;
+};
 
-</div>
+void get_fractions(struct fraction *fracblock, int numfrac) {
+    char buffer[32];
+    for (int i = 0; i < numfrac; i++) {
+        printf("Enter numerator for fraction %d: ", i+1);
+        fgets(buffer, 32, stdin);
+        int numerator = atoi(buffer);
+        printf("Enter denominator for fraction %d: ", i+1);
+        fgets(buffer, 32, stdin);
+        int denominator = atoi(buffer);
+
+        // use array syntax to fill in numer/denom for the ith fraction
+        fracblock[i].numerator = numerator;
+        fracblock[i].denominator = denominator;
+    }
+}
+
+void invert_fractions(struct fraction *fracblock, int numfrac) {
+    for (int i = 0; i < numfrac; i++) {
+        int tmp = fracblock->numerator;
+        fracblock->numerator = fracblock->denominator;
+        fracblock->denominator = tmp;
+
+        fracblock += 1; // pointer arithmetic:
+                        // advance the pointer by 1 struct fraction
+    }
+}
+
+void print_fractions(struct fraction *fracblock, int numfrac) {
+    for (int i = 0; i < numfrac; i++) {
+        // use pointer-arithmetic syntax to get numerator/denominator
+        // for each fraction
+
+        printf("%d: %d/%d\n", i+1, (fracblock+i)->numerator, 
+                                   (fracblock+i)->denominator);
+    }
+}
+
+int main() {
+    char buffer[32];
+    printf("How many fractions to make? ");
+    fgets(buffer, 32, stdin);
+    int numfrac = atoi(buffer);
+
+    // allocate a block of numfrac fractions from the heap
+    struct fraction *fractions = malloc(sizeof(struct fraction) * numfrac);
+
+    // call function to "fill-in" each fraction
+    get_fractions(fractions, numfrac);
+    invert_fractions(fractions, numfrac);
+    print_fractions(fractions, numfrac);
+
+    free(fractions); // return block of fraction memory to the heap
+
+    return EXIT_SUCCESS;
+}
+```
 
 ### Memory leaks and dangling pointers
 
@@ -664,11 +724,55 @@ focusing on these two characters in this example.) Since the string will
 "grow" as we escape it, dynamic memory allocation has obvious benefits.
 Here is the code:
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-code/escapehtml.c
+int count_escapees(const char *htmltext) {
+    int count = 0;
+    for (int i = 0; i < strlen(htmltext); i++) {
+        if (htmltext[i] == '<' || htmltext[i] == '>') {
+            count += 1;
+        }
+    }
+    return count;
+}
 
-</div>
+void doescape(const char *htmltext, char *expandedtext) {
+    int j = 0;
+    for (int i = 0; i < strlen(htmltext); i++) {
+        if (htmltext[i] == '<') {
+            strcpy(&expandedtext[j], "&lt;");
+            j += 4;
+        } else if (htmltext[i] == '>') {
+            strcpy(&expandedtext[j], "&gt;");
+            j += 4;
+        } else {
+            expandedtext[j] = htmltext[i];
+            j += 1;
+        }
+    }
+}
+
+char *escapehtml(const char *htmltext) {
+    int count = count_escapees(htmltext);
+    int origlen = strlen(htmltext);
+    int expandedlen = origlen + count * 4 + 1;
+    char *expandedtext = malloc(sizeof(char) * expandedlen);
+    doescape(htmltext, expandedtext);
+    return expandedtext;
+}
+
+int main() {
+    const char *orig = "<a href=\"badurl\">a link!</a>";
+    char *escaped = escapehtml(orig);
+    printf("Original: %s\n", orig);
+    printf("Escaped: %s\n", escaped);
+    free(escaped);
+    return EXIT_SUCCESS;
+}
+```
 
 ### Linked lists
 

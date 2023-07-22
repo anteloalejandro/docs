@@ -255,11 +255,17 @@ true. After every execution of the loop, the action is executed. The
 following example executes 10 times by counting 0..9. Many loops look
 very much like the following:
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-code/forloop.c
-
-</div>
+int main() {
+    for (int i = 0; i < 10; i++) {
+        printf("%d\n", i);
+    }
+    return EXIT_SUCCESS;
+}
+```
 
 C programs often have series of the form 0..(some\_number-1). It's
 idiomatic in C for loops like the example above to start at 0 and use

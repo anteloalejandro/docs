@@ -180,11 +180,23 @@ since the size of a single int is almost always 4 bytes.
 No surprises there, right? Let's look at the following program, which
 defines a `struct student` containing a name, class year, and age.
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-code/structalign.c
+struct student {
+    char name[32];
+    short class_year;
+    char age;
+};
 
-</div>
+int main() {
+    struct student s = { "H. Sommers", 2026, 5 };
+    printf("An example student: %s, %d, %d\n", s.name, s.class_year, s.age);
+    printf("Size of a student struct: %lu\n", sizeof(struct student));
+    return EXIT_SUCCESS;
+}
+```
 
 Compiling and running this code gives this output:
 

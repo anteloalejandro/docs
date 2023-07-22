@@ -107,11 +107,24 @@ long integer", which is what `sizeof` returns. (As an exercise, change
 `%lu` to `%d` and recompile with `clang`. It will helpfully tell you
 that something is fishy with the `printf` call.)
 
-<div class="literalinclude" data-linenos="" data-language="c">
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-code/sizes.c
-
-</div>
+int main() {
+    char c = 'a';
+    short s = 0xbeef;
+    int i = 100000;
+    long l = 100000000L;
+    long long ll = 60000000000LL;
+    printf("A char is %lu bytes\n", sizeof(c));
+    printf("A short is %lu bytes\n", sizeof(s));
+    printf("An int is %lu bytes\n", sizeof(i));
+    printf("A long is %lu bytes\n", sizeof(l));
+    printf("A long long is %lu bytes\n", sizeof(ll));
+    return EXIT_SUCCESS;
+}
+```
 
 When the above program is run on a 32-bit machine\[2\], the output is:
 
@@ -725,11 +738,20 @@ Say we want to set certain bits in a byte. In particular, say that
 that the byte is equal to `0b00010010` (hex 0x12). The following program
 would do that:
 
-<div class="literalinclude" data-language="c" data-linenos="">
+```c
+#include <stdio.h>
 
-code/enumbits.c
+#define SECOND 1
+#define FIFTH 4
 
-</div>
+int main() {
+    unsigned char flags = 0b00000000;
+    flags = (1<<SECOND);          // light up the 2nd bit
+    flags = flags | (1 << FIFTH); // and the 5th
+    printf("0x%x\n", flags);
+    return 0;
+}
+```
 
 Lines 3 and 4 in the code segment above create two *macro substitutions*
 (`#define` is a C preprocessor directive). During the preprocessing
